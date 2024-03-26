@@ -10,6 +10,11 @@ class trader:
         self.stockList.append(stock)
 
     def sellStock(self):
+        #get stock name
         print("Enter the stock name to sell:")
         stockName = input()
-        self.stockList.remove(stockName)
+
+        #Check if stock is on the list
+        
+        
+        
