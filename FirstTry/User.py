@@ -1,7 +1,8 @@
 import sys
+import StockInfo
 import yfinance as yf
 from datetime import datetime, timedelta
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QTableWidget, QTableWidgetItem, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QTableWidget, QTableWidgetItem, QHBoxLayout, QVBoxLayout, QLabel
 
 class StockVisualizer(QWidget):
     def __init__(self):
@@ -27,7 +28,7 @@ class StockVisualizer(QWidget):
 
     def get_stock_data(self):
         ticker = self.tickerInput.text()
-        stock_info = StockInfo(ticker)
+        stock_info = StockInfo.StockInfo(ticker)
         historical_data = stock_info.get_historical_data()
 
         self.update_table(historical_data)
@@ -40,9 +41,10 @@ class StockVisualizer(QWidget):
 
         for row, date in enumerate(data.index):
             date_str = date.strftime('%Y-%m-%d') 
+            self.dataTable.setItem(row, 0, QTableWidgetItem(date_str))
             for col, col_name in enumerate(["Open", "High", "Low", "Close", "Volume"]):
                 item = QTableWidgetItem(str(data.loc[date, col_name]))
-                self.dataTable.setItem(row, col, item) 
+                self.dataTable.setItem(row, col+1, item) 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
