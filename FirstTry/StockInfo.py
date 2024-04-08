@@ -22,3 +22,8 @@ class StockInfo:
 # historical_data = stock_info.get_historical_data()
 # print("Historical Data:")
 # print(historical_data)
+
+# # To install python packages:
+# type pip install (package name) in the terminal
+# Example: pip install yfinance
+# example installs yfinance package used in project
