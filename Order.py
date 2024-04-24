@@ -85,19 +85,3 @@ class OrderMatchingStrategy(ABC):
     @abstractmethod
     def match_orders(self, buy_orders: List[Order], sell_orders: List[Order]) -> Tuple[List[Order], List[Order]]:
         pass
-
-# this sometimes causes errors in my ide, not an issue of my code
-# as i code perfectly every single time, its an issue with the typing
-# module i am using for this function
-class PriceTimeOrderMatchingStrategy(OrderMatchingStrategy):
-    def match_orders(self, buy_orders: List['Order'], sell_orders: List['Order']) -> Tuple[List['Order'], List['Order']]:
-        matched_orders: List['Order'] = []
-
-        for sell_order in sell_orders:
-            for buy_order in buy_orders[:]:
-                if sell_order.get_price() <= buy_order.get_price():
-                    matched_orders.append(buy_order)
-                    buy_orders.remove(buy_order)
-
-        buy_orders.extend(matched_orders)
-        return buy_orders, sell_orders
