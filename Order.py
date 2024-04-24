@@ -2,10 +2,15 @@ from datetime import datetime
 import yfinance as yf #not really used but i wish to when the other classes has been forged
 from abc import ABC, abstractmethod
 from typing import List, Tuple
+import enum
 
 
 #TODO:
 # modify classes to use the yfinance module
+
+class OrderType(enum.Enum):
+    BUY = 1
+    SELL = 2
 
 class Order:
     def __init__(self, id : int, price : float, quantity : int):
@@ -35,8 +40,8 @@ class Order:
     def get_order_type(self) -> str:
         return self.order_type
     
-    def set_order_type(self, new_order_type: str):
-        self.order_type = new_order_type
+    def set_order_type(self, order_type):
+        self.order_type = order_type
 
     #reduces quantity of order by amount
     def reduce_quantity(self, amount: int):
@@ -75,6 +80,7 @@ class LimitOrderFactory(OrderFactory):
     def create_order(self, trader_id: int, price: float, quantity: int):
         return LimitOrder(trader_id, price, quantity)
 
+## the tuple for sell_orders represents two lists. one for the reamining buy orders and the other is for the remaining sell orders
 class OrderMatchingStrategy(ABC):
     @abstractmethod
     def match_orders(self, buy_orders: List[Order], sell_orders: List[Order]) -> Tuple[List[Order], List[Order]]:
